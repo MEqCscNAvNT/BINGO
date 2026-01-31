@@ -508,4 +508,34 @@ function playSe(type) {
 
 function stopSe(type) {
   if (type === 'drum') { seDrum.pause(); seDrum.currentTime = 0; }
+
 }
+
+/* =========================================
+   キーボード操作 (スペースキー対応)
+   ========================================= */
+document.addEventListener('keydown', (e) => {
+  // スペースキーが押されたかチェック
+  if (e.code === 'Space') {
+    e.preventDefault(); // スペースキーによる画面スクロールを防止
+
+    // A. オープニング画面が表示されている場合
+    if (!elOpeningScreen.classList.contains('hidden')) {
+      elEnterBtn.click(); // STARTボタンをクリックしたことにする
+      return;
+    }
+
+    // B. メイン画面の場合
+    // 抽選中でなく、かつボタンが押せる状態（終了していない）なら実行
+    if (!isAnimating && !elStartBtn.disabled) {
+      
+      // もし音量メニューが開いていたら閉じる（邪魔にならないように）
+      if (elBgmMenu.classList.contains('show')) {
+        elBgmMenu.classList.remove('show');
+      }
+
+      // 抽選開始
+      startDraw();
+    }
+  }
+});
