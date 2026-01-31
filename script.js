@@ -512,12 +512,12 @@ function stopSe(type) {
 }
 
 /* =========================================
-   キーボード操作 (スペースキー対応)
+   キーボード操作 (スペースキー & エンターキー対応)
    ========================================= */
 document.addEventListener('keydown', (e) => {
-  // スペースキーが押されたかチェック
-  if (e.code === 'Space') {
-    e.preventDefault(); // スペースキーによる画面スクロールを防止
+  // スペースキー または エンターキー が押されたかチェック
+  if (e.code === 'Space' || e.code === 'Enter') {
+    e.preventDefault(); // デフォルト動作（スクロールや予期せぬフォーカス移動）を防止
 
     // A. オープニング画面が表示されている場合
     if (!elOpeningScreen.classList.contains('hidden')) {
@@ -529,7 +529,7 @@ document.addEventListener('keydown', (e) => {
     // 抽選中でなく、かつボタンが押せる状態（終了していない）なら実行
     if (!isAnimating && !elStartBtn.disabled) {
       
-      // もし音量メニューが開いていたら閉じる（邪魔にならないように）
+      // もし音量メニューが開いていたら閉じる
       if (elBgmMenu.classList.contains('show')) {
         elBgmMenu.classList.remove('show');
       }
